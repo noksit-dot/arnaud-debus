@@ -58,7 +58,14 @@ const circles = site.zones.mapCircles;
         attribution: "© OpenStreetMap contributors",
       }).addTo(map);
 
+      // La carte est créée sans vue initiale : tant qu'aucune vue n'est
+      // définie, Leaflet DIFFÈRE l'ajout réel des couches (map._loaded=false).
+      // On ne peut donc pas utiliser group.getBounds() (les cercles ne sont
+      // pas encore projetés → crash). On calcule les bornes nous-mêmes à
+      // partir des centres + rayons, puis fitBounds() fixe la vue et déclenche
+      // l'ajout différé des cercles.
       const group = L.featureGroup();
+      const bounds = L.latLngBounds([]);
       circles.forEach((z) => {
         L.circle([z.lat, z.lng], {
           radius: z.radiusKm * 1000,
@@ -69,9 +76,10 @@ const circles = site.zones.mapCircles;
         })
           .bindPopup(`Zone de déplacement — autour de ${z.name}`)
           .addTo(group);
+        bounds.extend(L.latLng(z.lat, z.lng).toBounds(z.radiusKm * 2 * 1000));
       });
       group.addTo(map);
-      map.fitBounds(group.getBounds(), { padding: [24, 24] });
+      map.fitBounds(bounds, { padding: [24, 24] });
       map.invalidateSize();
 
       // Boutons de zoom nommés en français (accessibilité)
