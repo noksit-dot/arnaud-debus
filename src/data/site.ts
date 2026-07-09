@@ -18,7 +18,7 @@ export const site = {
   tagline: "Psychologue à domicile",
   region: "Hérault (34)",
   titles:
-    "Psychologue clinicien · Neuropsychologue · Praticien en TCC · Art-thérapeute",
+    "Psychologue clinicien · Neuropsychologue · Praticien en Thérapies Cognitives et Comportementales · Art-thérapeute",
 
   // ── Coordonnées ───────────────────────────────────────────────────────────
   email: "arnauddebus@sfr.fr",

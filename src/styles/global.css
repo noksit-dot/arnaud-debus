@@ -259,12 +259,7 @@ header.site {
   font-weight: 700;
   margin-bottom: 18px;
 }
-.badge .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #2e7d32;
-}
+
 .cta-row {
   display: flex;
   flex-wrap: wrap;
