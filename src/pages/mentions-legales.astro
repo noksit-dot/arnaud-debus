@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+import { link } from "../lib/url";
+
+const { legal } = site;
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description={`Mentions légales du site de ${site.name}, psychologue à domicile dans l'Hérault.`}
+>
+  <section>
+    <div class="container">
+      <div class="legal">
+        <h1>{legal.heading}</h1>
+        <dl>
+          {legal.entries.map((e) => (
+            <>
+              <dt>{e.term}</dt>
+              <dd>{e.value}</dd>
+            </>
+          ))}
+        </dl>
+        <a class="back-home" href={link()}>← Retour à l'accueil</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

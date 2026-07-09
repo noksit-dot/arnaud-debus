@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import { site } from "../data/site";
+import village from "../assets/contact-village.jpg";
+
+const { contact } = site;
+const mailto = `mailto:${site.email}?subject=${encodeURIComponent(contact.mailSubject)}`;
+---
+
+<section id="contact" class="band">
+  <div class="container">
+    <h2>{contact.heading}</h2>
+    <div class="contact-grid">
+      <div>
+        <p>{contact.intro}</p>
+        <div class="contact-methods">
+          <a class="method" href={mailto}>
+            <span class="ic" aria-hidden="true">✉️</span>
+            <span><b>{site.email}</b><small>Réponse par email</small></span>
+          </a>
+          <a class="method" href={`tel:${site.phoneIntl}`}>
+            <span class="ic" aria-hidden="true">📞</span>
+            <span><b>{site.phone}</b><small>Appel (pas de SMS)</small></span>
+          </a>
+          <a
+            class="method"
+            href={`https://wa.me/${site.whatsapp}`}
+            rel="noopener"
+          >
+            <span class="ic" aria-hidden="true">💬</span>
+            <span><b>WhatsApp</b><small>Messages au {site.phone}</small></span>
+          </a>
+        </div>
+        <div class="urgence">
+          <strong>En cas d'urgence</strong> — <span set:html={contact.urgence} />
+        </div>
+      </div>
+      <figure class="art-frame" style="margin:0">
+        <Image
+          src={village}
+          alt="Peinture de Arnaud Debus"
+          widths={[400, 700]}
+          sizes="(max-width: 820px) 100vw, 40vw"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+  </div>
+</section>

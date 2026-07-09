@@ -1,0 +1,28 @@
+---
+import { site } from "../data/site";
+import Map from "./Map.astro";
+
+const { zones } = site;
+---
+
+<section id="zones">
+  <div class="container">
+    <h2>{zones.heading}</h2>
+    <div class="zones-grid">
+      <div>
+        <p>{zones.intro}</p>
+        <div class="zone-badges">
+          {zones.badges.map((b) => (
+            <span class="chip">{b}</span>
+          ))}
+        </div>
+        <div class="hours">
+          <h3 style="margin-top:0">{zones.hoursHeading}</h3>
+          <p style="margin:0" set:html={zones.hoursText} />
+        </div>
+      </div>
+
+      <Map />
+    </div>
+  </div>
+</section>

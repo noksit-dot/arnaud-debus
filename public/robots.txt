@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noksit-dot.github.io/arnaud-debus/sitemap-index.xml

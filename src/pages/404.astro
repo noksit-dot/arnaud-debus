@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { link } from "../lib/url";
+---
+
+<BaseLayout
+  title="Page introuvable"
+  description="Cette page n'existe pas ou a été déplacée."
+>
+  <section>
+    <div class="container" style="text-align:center">
+      <h1>Page introuvable</h1>
+      <p>Désolé, cette page n'existe pas ou a été déplacée.</p>
+      <a class="btn" href={link()}>Retour à l'accueil</a>
+    </div>
+  </section>
+</BaseLayout>

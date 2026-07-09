@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import { site } from "../data/site";
+import bulles from "../assets/prestations-bulles.jpg";
+
+const { services } = site;
+const visible = services.themesVisibleCount;
+const hiddenCount = services.themes.length - visible;
+---
+
+<section id="prestations" class="band">
+  <div class="container">
+    <div class="presta-head">
+      <div>
+        <h2>{services.heading}</h2>
+        <p>{services.intro}</p>
+      </div>
+      <figure class="art-frame" style="margin:0">
+        <Image
+          src={bulles}
+          alt="Peinture de Arnaud Debus"
+          widths={[300, 500]}
+          sizes="(max-width: 820px) 100vw, 30vw"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+
+    <div class="cards">
+      {services.cards.map((card) => (
+        <div class="card">
+          <span class="tag">{card.tag}</span>
+          <h3>{card.title}</h3>
+          <div class="price" style={card.priceNote ? "" : "font-size:1.05rem"}>
+            {card.price}
+            {card.priceNote && <small>{card.priceNote}</small>}
+          </div>
+          <ul>
+            {card.items.map((it) => (
+              <li>{it}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <h3 style="margin-top:2em">
+      {services.themesHeading}
+      <small class="themes-note">{services.themesNote}</small>
+    </h3>
+    <div class="chips" id="chips">
+      {services.themes.map((theme, i) => (
+        <span class:list={["chip", { extra: i >= visible }]} hidden={i >= visible}>
+          {theme}
+        </span>
+      ))}
+      <button
+        class="chip chip-toggle"
+        id="chips-toggle"
+        aria-expanded="false"
+        aria-controls="chips"
+      >
+        Voir plus (+{hiddenCount})
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const toggle = document.getElementById("chips-toggle");
+  if (toggle) {
+    const extras = document.querySelectorAll<HTMLElement>("#chips .extra");
+    const n = extras.length;
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      extras.forEach((el) => {
+        el.hidden = expanded;
+      });
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      toggle.textContent = expanded ? `Voir plus (+${n})` : "Voir moins";
+    });
+  }
+</script>

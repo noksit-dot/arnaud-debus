@@ -1,0 +1,22 @@
+{
+  "name": "arnaud-debus",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site vitrine d'Arnaud Debus, psychologue à domicile (Hérault).",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/comfortaa": "^5.1.0",
+    "@fontsource/lato": "^5.1.0",
+    "astro": "^5.1.1",
+    "leaflet": "^1.9.4",
+    "sharp": "^0.33.5"
+  }
+}

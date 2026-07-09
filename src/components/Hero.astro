@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import { site } from "../data/site";
+import { link } from "../lib/url";
+import etang from "../assets/hero-etang.jpg";
+---
+
+<section id="accueil" class="band">
+  <div class="container hero">
+    <div>
+      <span class="badge"><span class="dot"></span> {site.hero.badge}</span>
+      <h1>{site.hero.h1}</h1>
+      <p class="titles">{site.titles}</p>
+      <p>{site.hero.intro}</p>
+      <div class="cta-row">
+        <a class="btn" href={link("#contact")}>{site.hero.ctaPrimary}</a>
+        <a class="btn secondary" href={link("#prestations")}>
+          {site.hero.ctaSecondary}
+        </a>
+      </div>
+    </div>
+    <figure class="art-frame" style="margin:0">
+      <Image
+        src={etang}
+        alt="Peinture de Arnaud Debus"
+        widths={[400, 700, 900]}
+        sizes="(max-width: 820px) 100vw, 45vw"
+        loading="eager"
+      />
+    </figure>
+  </div>
+</section>

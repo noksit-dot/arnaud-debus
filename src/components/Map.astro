@@ -1,0 +1,89 @@
+---
+import { site } from "../data/site";
+
+// Les cercles (centre-ville + rayon) sont sérialisés pour le script client.
+const circles = site.zones.mapCircles;
+---
+
+<div class="map-wrap">
+  <!-- Pattern RGPD : la carte OSM ne se charge qu'au clic de l'utilisateur -->
+  <div class="map-placeholder" id="map-ph">
+    <strong>Carte des zones de déplacement</strong>
+    <small>
+      La carte utilise OpenStreetMap. Elle ne se charge qu'après votre clic
+      (aucune donnée n'est transmise avant).
+    </small>
+    <button class="btn" id="load-map">Afficher la carte</button>
+  </div>
+  <div
+    id="map"
+    hidden
+    tabindex="0"
+    role="application"
+    aria-label="Carte des zones de déplacement autour de Béziers, Clermont-l'Hérault et Pézenas"
+  >
+  </div>
+  <div class="attr" id="attr" hidden>Fond de carte © OpenStreetMap contributors</div>
+
+  <script type="application/json" id="map-data" set:html={JSON.stringify(circles)}
+  ></script>
+</div>
+
+<script>
+  // Leaflet est AUTO-HÉBERGÉ (paquet npm) et importé dynamiquement : son code
+  // et les tuiles OSM ne sont téléchargés qu'au clic → le reste du site reste 0 JS.
+  const loadBtn = document.getElementById("load-map");
+
+  loadBtn?.addEventListener("click", async () => {
+    const ph = document.getElementById("map-ph")!;
+    try {
+      const [{ default: L }] = await Promise.all([
+        import("leaflet"),
+        import("leaflet/dist/leaflet.css"),
+      ]);
+
+      ph.style.display = "none";
+      const mapEl = document.getElementById("map") as HTMLElement;
+      const attr = document.getElementById("attr")!;
+      mapEl.hidden = false;
+      attr.hidden = false;
+
+      const circles = JSON.parse(
+        document.getElementById("map-data")!.textContent || "[]",
+      ) as { name: string; lat: number; lng: number; radiusKm: number }[];
+
+      const map = L.map(mapEl, { scrollWheelZoom: false });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      const group = L.featureGroup();
+      circles.forEach((z) => {
+        L.circle([z.lat, z.lng], {
+          radius: z.radiusKm * 1000,
+          color: "#6D28D9",
+          weight: 2,
+          fillColor: "#8B5CF6",
+          fillOpacity: 0.18,
+        })
+          .bindPopup(`Zone de déplacement — autour de ${z.name}`)
+          .addTo(group);
+      });
+      group.addTo(map);
+      map.fitBounds(group.getBounds(), { padding: [24, 24] });
+      map.invalidateSize();
+
+      // Boutons de zoom nommés en français (accessibilité)
+      const zin = mapEl.querySelector(".leaflet-control-zoom-in");
+      const zout = mapEl.querySelector(".leaflet-control-zoom-out");
+      zin?.setAttribute("aria-label", "Zoomer");
+      zin?.setAttribute("title", "Zoomer");
+      zout?.setAttribute("aria-label", "Dézoomer");
+      zout?.setAttribute("title", "Dézoomer");
+    } catch (e) {
+      ph.innerHTML =
+        "<strong>Carte momentanément indisponible</strong><small>Zones : autour de Béziers, Clermont-l'Hérault et Pézenas. Vous pouvez aussi me joindre directement.</small>";
+    }
+  });
+</script>

@@ -1,0 +1,25 @@
+---
+import { site } from "../data/site";
+import { link } from "../lib/url";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site">
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">{site.name}</div>
+        <div>{site.tagline} · {site.region}</div>
+      </div>
+      <nav aria-label="Pied de page">
+        <a href={link("mentions-legales")}>Mentions légales</a>
+        &nbsp;·&nbsp;
+        <a href={link("#contact")}>Contact</a>
+      </nav>
+    </div>
+    <p style="margin:22px 0 0;font-size:.85rem;opacity:.85">
+      © {year} {site.name}. Peintures © {site.name}.
+    </p>
+  </div>
+</footer>

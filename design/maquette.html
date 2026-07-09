@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arnaud Debus — Psychologue à domicile (maquette)</title>
+<meta name="description" content="Arnaud Debus, psychologue clinicien et neuropsychologue à domicile, autour de Béziers, Clermont-l'Hérault et Pézenas. Conventionné Mon soutien psy.">
+
+<!-- Fonts : ici via Google Fonts pour la maquette ; en production elles seront AUTO-HÉBERGÉES (RGPD) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Anti-flash de thème : applique le thème avant le rendu -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --font-title: 'Comfortaa', system-ui, sans-serif;
+    --font-body: 'Lato', system-ui, sans-serif;
+
+    --bg: #F4EEFF;          /* fond page, lavande très clair */
+    --band: #E7D1FF;        /* lavande de référence (hero + bandeaux) */
+    --surface: #FFFFFF;     /* cartes */
+    --heading: #3D003E;     /* aubergine du site (AAA sur lavande) */
+    --text: #2B1430;        /* corps */
+    --muted: #5A4A63;       /* texte secondaire */
+    --primary: #6D28D9;     /* boutons (texte blanc = 7:1) */
+    --primary-hover: #7C3AED;
+    --link: #5B21B6;
+    --border: #D9C7F0;
+    --shadow: 0 6px 24px rgba(61, 0, 62, .08);
+    --focus: #3D003E;
+    --radius: 16px;
+    --maxw: 1080px;
+  }
+  :root[data-theme="dark"] {
+    --bg: #17101C;
+    --band: #241033;
+    --surface: #221830;
+    --heading: #E7D1FF;
+    --text: #E6DAF0;
+    --muted: #B8A6C9;
+    --primary: #6D28D9;
+    --primary-hover: #8B5CF6;
+    --link: #C4B5FD;
+    --border: #3A2A48;
+    --shadow: 0 6px 24px rgba(0, 0, 0, .4);
+    --focus: #C4B5FD;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-title); color: var(--heading); line-height: 1.2; font-weight: 700; }
+  h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); margin: 0 0 .4em; }
+  h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0 0 .6em; }
+  h3 { font-size: 1.15rem; margin: 0 0 .4em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); }
+  img { max-width: 100%; display: block; }
+
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+  section { padding: clamp(48px, 8vw, 88px) 0; scroll-margin-top: 76px; }
+  .band { background: var(--band); }
+
+  /* Focus visible partout */
+  a:focus-visible, button:focus-visible, .btn:focus-visible, #map:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Skip link */
+  .skip {
+    position: absolute; left: 12px; top: -60px; z-index: 200;
+    background: var(--surface); color: var(--heading);
+    padding: 10px 16px; border-radius: 8px; box-shadow: var(--shadow);
+    transition: top .15s ease;
+  }
+  .skip:focus { top: 12px; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+  .brand { font-family: var(--font-title); font-weight: 700; color: var(--heading); text-decoration: none; font-size: 1.15rem; }
+  .brand span { display: block; font-family: var(--font-body); font-weight: 400; font-size: .72rem; color: var(--muted); letter-spacing: .02em; }
+  .nav-links { display: flex; gap: 6px; align-items: center; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { color: var(--text); text-decoration: none; padding: 8px 12px; border-radius: 8px; font-size: .95rem; }
+  .nav-links a:hover { background: color-mix(in srgb, var(--band) 60%, transparent); color: var(--heading); }
+  .theme-toggle {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); color: var(--heading);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 13px; cursor: pointer; font-family: var(--font-body); font-size: .85rem;
+  }
+  .theme-toggle:hover { border-color: var(--primary); }
+  .burger { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px 11px; cursor: pointer; color: var(--heading); font-size: 1.2rem; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary); color: #fff; text-decoration: none;
+    padding: 13px 22px; border-radius: 999px; font-weight: 700; font-family: var(--font-body);
+    border: 0; cursor: pointer; font-size: 1rem; transition: background .15s ease, transform .15s ease;
+  }
+  .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+  .btn.secondary { background: transparent; color: var(--heading); border: 2px solid var(--primary); padding: 11px 20px; }
+  .btn.secondary:hover { background: color-mix(in srgb, var(--primary) 12%, transparent); }
+
+  /* ---------- Hero ---------- */
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 44px; align-items: center; }
+  .hero .titles { color: var(--muted); font-size: 1.02rem; margin: -.2em 0 1em; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); color: var(--heading); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 14px; font-size: .82rem; font-weight: 700; margin-bottom: 18px;
+  }
+  .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #2e7d32; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .art-frame { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 6px solid var(--surface); }
+  .art-frame img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 5 / 4; }
+
+  /* ---------- About ---------- */
+  .about { display: grid; grid-template-columns: .8fr 1.2fr; gap: 44px; align-items: start; }
+  .portrait { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 6px solid var(--surface); }
+  .portrait img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+  .callout {
+    background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--primary);
+    border-radius: 12px; padding: 18px 22px; box-shadow: var(--shadow); margin-top: 24px;
+  }
+  .callout h3 { margin-top: 0; }
+  .timeline { list-style: none; margin: 8px 0 0; padding: 0; }
+  .timeline li { padding: 12px 0 12px 22px; border-left: 2px solid var(--border); position: relative; }
+  .timeline li::before { content: ""; position: absolute; left: -7px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); }
+  .timeline .year { font-family: var(--font-title); font-weight: 700; color: var(--heading); }
+
+  /* ---------- Prestations ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+  .card .price { font-family: var(--font-title); font-weight: 700; color: var(--heading); font-size: 1.35rem; margin: 6px 0 12px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; }
+  .tag { display: inline-block; background: color-mix(in srgb, var(--primary) 14%, transparent); color: var(--heading); border-radius: 999px; padding: 3px 11px; font-size: .78rem; font-weight: 700; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; font-size: .9rem; color: var(--text); }
+  .chip-toggle { cursor: pointer; font-family: var(--font-body); font-weight: 700; color: var(--primary); border-color: var(--primary); background: transparent; }
+  .chip-toggle:hover { background: color-mix(in srgb, var(--primary) 12%, transparent); }
+  .presta-head { display: grid; grid-template-columns: 1.4fr .6fr; gap: 32px; align-items: center; margin-bottom: 36px; }
+  .presta-head .art-frame img { aspect-ratio: 4 / 5; }
+
+  /* ---------- Zones / carte ---------- */
+  .zones-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 40px; align-items: start; }
+  .zone-badges { display: flex; flex-direction: column; gap: 12px; margin: 18px 0; }
+  .zone-badges .chip { font-weight: 700; color: var(--heading); }
+  .hours { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; box-shadow: var(--shadow); }
+  .map-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .map-placeholder {
+    aspect-ratio: 16 / 10; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 24px; background: var(--band); color: var(--heading);
+  }
+  .map-placeholder small { color: var(--muted); max-width: 42ch; }
+  #map { height: 420px; width: 100%; }
+  .attr { font-size: .78rem; color: var(--muted); padding: 8px 12px; background: var(--surface); }
+
+  /* ---------- Contact ---------- */
+  .contact-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
+  .contact-methods { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+  .method { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); box-shadow: var(--shadow); }
+  .method:hover { border-color: var(--primary); }
+  .method .ic { font-size: 1.4rem; width: 40px; height: 40px; display: grid; place-items: center; background: var(--band); border-radius: 10px; }
+  .method b { color: var(--heading); font-family: var(--font-title); }
+  .method small { display: block; color: var(--muted); }
+  .urgence { background: color-mix(in srgb, #b25959 16%, var(--surface)); border: 1px solid #b25959; border-radius: 12px; padding: 16px 20px; margin-top: 22px; }
+  .urgence strong { color: var(--heading); }
+
+  /* ---------- Footer / légal ---------- */
+  footer.site { background: var(--heading); color: #F4EEFF; padding: 40px 0 28px; }
+  :root[data-theme="dark"] footer.site { background: #0f0a14; }
+  footer.site a { color: #E7D1FF; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; }
+  .foot-brand { font-family: var(--font-title); font-weight: 700; font-size: 1.15rem; }
+  #mentions { padding-top: 0; }
+  .legal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 30px; box-shadow: var(--shadow); font-size: .92rem; }
+  .legal h2 { font-size: 1.4rem; }
+  .legal dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 0; }
+  .legal dt { color: var(--muted); }
+  .legal dd { margin: 0; color: var(--text); }
+
+  .note { font-size: .8rem; color: var(--muted); border: 1px dashed var(--border); border-radius: 10px; padding: 6px 12px; display: inline-block; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .hero, .about, .presta-head, .zones-grid, .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+    .cards { grid-template-columns: 1fr; }
+    .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px; gap: 4px; }
+    .nav-links.open { display: flex; }
+    .burger { display: inline-block; }
+    .legal dl { grid-template-columns: 1fr; }
+    .legal dt { margin-top: 8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="site">
+  <div class="container nav">
+    <a class="brand" href="#accueil">Arnaud Debus<span>Psychologue à domicile</span></a>
+    <nav aria-label="Navigation principale">
+      <button class="burger" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">☰</button>
+      <ul class="nav-links" id="menu">
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#prestations">Prestations</a></li>
+        <li><a href="#zones">Zones</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="theme" aria-label="Basculer le thème clair/sombre">
+      <span id="theme-icon" aria-hidden="true">🌙</span><span id="theme-label">Sombre</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ACCUEIL -->
+  <section id="accueil" class="band">
+    <div class="container hero">
+      <div>
+        <span class="badge"><span class="dot"></span> Psychologue conventionné · Mon soutien psy</span>
+        <h1>Psychologue à domicile, autour de Béziers, Clermont-l'Hérault &amp; Pézenas</h1>
+        <p class="titles">Psychologue clinicien · Neuropsychologue · Praticien en TCC · Art-thérapeute</p>
+        <p>Je vous propose de nous rencontrer à votre domicile, ou dans tout autre endroit où vous
+          vous sentirez bien, pour entreprendre un travail de soutien ou thérapeutique.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contact">Contactez-moi</a>
+          <a class="btn secondary" href="#prestations">Voir les prestations</a>
+        </div>
+      </div>
+      <figure class="art-frame" style="margin:0">
+        <img src="reference-assets/hero-etang.jpg" alt="Peinture de Arnaud Debus" width="700" height="559">
+      </figure>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="a-propos">
+    <div class="container">
+      <div class="about">
+        <div class="portrait">
+          <img src="reference-assets/photo-arnaud.jpg" alt="Arnaud Debus, psychologue" width="1000" height="803">
+        </div>
+        <div>
+          <h2>Qui suis-je&nbsp;?</h2>
+          <p>Je suis psychologue depuis 2015, suite à une réorientation professionnelle. Mon choix de
+            pratiquer à domicile répond à une qualité de clinicien&nbsp;: être au plus près du quotidien
+            et des problématiques de mes clients, et rendre la psychologie accessible aux personnes qui
+            se déplacent difficilement.</p>
+          <p>J'accompagne les adultes, à partir de 18 ans, quels que soient l'âge et les demandes.
+            Mon expérience auprès des personnes âgées nourrit une écoute attentive aux transitions et
+            aux fragilités de chaque étape de la vie. J'utilise des outils variés&nbsp;: entretien
+            individuel, jeu de rôle, groupe de parole, jeu… selon le contexte et le besoin.</p>
+
+          <h3 style="margin-top:1.4em">Parcours</h3>
+          <ul class="timeline">
+            <li><span class="year">1994</span> — Licence d'Ethnologie, Université des Sciences Humaines de Strasbourg</li>
+            <li><span class="year">2015</span> — Master de psychologie clinique (Psychopathologie et Neuropsychologie du Vieillissement), Université de Montpellier</li>
+            <li><span class="year">2021</span> — Formation Praticien en Thérapies Cognitives et Comportementales (AFTCC)</li>
+          </ul>
+
+          <div class="callout">
+            <h3>Les Thérapies Cognitives et Comportementales (TCC)</h3>
+            <p style="margin:0">Des thérapies brèves centrées sur les pensées, les émotions et les
+              comportements, ancrées dans « l'ici et maintenant ». Efficaces notamment sur la dépression,
+              les troubles anxieux, les phobies, les TOC ou les comportements addictifs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESTATIONS -->
+  <section id="prestations" class="band">
+    <div class="container">
+      <div class="presta-head">
+        <div>
+          <h2>Prestations</h2>
+          <p>Les consultations se déroulent à votre domicile, ou dans un lieu calme qui vous convient.
+            En fonction des objectifs définis ensemble, nous pouvons aussi nous rencontrer ailleurs, ou
+            travailler à distance en visioconférence.</p>
+        </div>
+        <figure class="art-frame" style="margin:0">
+          <img src="reference-assets/prestations-bulles.jpg" alt="Peinture de Arnaud Debus" width="1000" height="1250">
+        </figure>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Consultation</span>
+          <h3>Consultation classique</h3>
+          <div class="price">50 € <small style="font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:.9rem">/ séance</small></div>
+          <ul>
+            <li>Séance de 45 min à 1 h</li>
+            <li>Déplacement compris</li>
+            <li>Paiement en fin de séance, facture sur demande</li>
+            <li>Compatible avec un travail en TCC</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag">Conventionné</span>
+          <h3>Mon soutien psy</h3>
+          <div class="price">50 € <small style="font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:.9rem">remboursé</small></div>
+          <ul>
+            <li>Jusqu'à 12 séances / an</li>
+            <li>Avec ou sans orientation médicale</li>
+            <li>60 % Assurance Maladie + 40 % mutuelle</li>
+            <li>Feuille de soin remise à chaque séance</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag">Professionnels</span>
+          <h3>Entreprises &amp; ESMS</h3>
+          <div class="price" style="font-size:1.05rem">Sur demande</div>
+          <ul>
+            <li>Analyse des pratiques professionnelles</li>
+            <li>Affirmation de soi, communication non violente</li>
+            <li>Troubles du comportement liés à l'âge (ESMS)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2em">Thématiques accompagnées <small style="font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:.85rem">— adultes, à partir de 18 ans</small></h3>
+      <div class="chips" id="chips">
+        <span class="chip">Estime de soi</span>
+        <span class="chip">Dépression</span>
+        <span class="chip">Anxiété</span>
+        <span class="chip">Trouble anxieux généralisé (TAG)</span>
+        <span class="chip">Attaques de panique</span>
+        <span class="chip">Phobies</span>
+        <span class="chip">Phobie sociale</span>
+        <span class="chip">TOC</span>
+        <span class="chip">Traumatismes</span>
+        <span class="chip">Deuil</span>
+        <span class="chip">Addictions</span>
+        <span class="chip">Gestion de la colère</span>
+        <span class="chip extra" hidden>Comportement violent</span>
+        <span class="chip extra" hidden>Difficultés relationnelles</span>
+        <span class="chip extra" hidden>Troubles de l'attachement</span>
+        <span class="chip extra" hidden>Prise de décisions &amp; priorités</span>
+        <span class="chip extra" hidden>Questions de genre / LGBTQIA+</span>
+        <span class="chip extra" hidden>Trouble de la personnalité borderline (TPB)</span>
+        <span class="chip extra" hidden>Psychose</span>
+        <span class="chip extra" hidden>Couple</span>
+        <span class="chip extra" hidden>Handicap</span>
+        <span class="chip extra" hidden>Adoption</span>
+        <span class="chip extra" hidden>Solitude &amp; isolement</span>
+        <span class="chip extra" hidden>Âge &amp; temps</span>
+        <span class="chip extra" hidden>Développement de projets</span>
+        <span class="chip extra" hidden>Études &amp; motivation</span>
+        <span class="chip extra" hidden>Art &amp; créativité</span>
+        <span class="chip extra" hidden>Travail en groupe</span>
+        <button class="chip chip-toggle" id="chips-toggle" aria-expanded="false" aria-controls="chips">Voir plus (+16)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONES -->
+  <section id="zones">
+    <div class="container">
+      <h2>Où et quand j'interviens</h2>
+      <div class="zones-grid">
+        <div>
+          <p>Je me déplace habituellement dans les secteurs suivants. N'hésitez pas à me contacter
+            même si vous êtes en dehors&nbsp;: nous pouvons aussi travailler en visioconférence.</p>
+          <div class="zone-badges">
+            <span class="chip">📍 Autour de Béziers</span>
+            <span class="chip">📍 Autour de Clermont-l'Hérault</span>
+            <span class="chip">📍 Autour de Pézenas</span>
+            <span class="chip">💻 En visioconférence</span>
+          </div>
+          <div class="hours">
+            <h3 style="margin-top:0">Quand&nbsp;?</h3>
+            <p style="margin:0">Rendez-vous les <b>mercredis de 8 h à 19 h</b>, ainsi que certains
+              <b>samedis de 13 h à 18 h</b>, en fonction de mes déplacements.</p>
+          </div>
+        </div>
+
+        <div class="map-wrap">
+          <!-- Pattern RGPD : la carte OSM ne se charge qu'au clic de l'utilisateur -->
+          <div class="map-placeholder" id="map-ph">
+            <strong>Carte des zones de déplacement</strong>
+            <small>La carte utilise OpenStreetMap. Elle ne se charge qu'après votre clic (aucune
+              donnée n'est transmise avant).</small>
+            <button class="btn" id="load-map">Afficher la carte</button>
+          </div>
+          <div id="map" hidden tabindex="0" role="application" aria-label="Carte des zones de déplacement autour de Béziers, Clermont-l'Hérault et Pézenas"></div>
+          <div class="attr" id="attr" hidden>Fond de carte © OpenStreetMap contributors</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="band">
+    <div class="container">
+      <h2>Pour me joindre</h2>
+      <div class="contact-grid">
+        <div>
+          <p>Merci de préciser dans votre message la commune où vous souhaitez que j'intervienne,
+            pour que je puisse répondre au mieux à votre demande.</p>
+          <div class="contact-methods">
+            <a class="method" href="mailto:arnauddebus@sfr.fr?subject=Prise%20de%20contact">
+              <span class="ic" aria-hidden="true">✉️</span>
+              <span><b>arnauddebus@sfr.fr</b><small>Réponse par email</small></span>
+            </a>
+            <a class="method" href="tel:+33777759310">
+              <span class="ic" aria-hidden="true">📞</span>
+              <span><b>07 77 75 93 10</b><small>Appel (pas de SMS)</small></span>
+            </a>
+            <a class="method" href="https://wa.me/33777759310" rel="noopener">
+              <span class="ic" aria-hidden="true">💬</span>
+              <span><b>WhatsApp</b><small>Messages au 07 77 75 93 10</small></span>
+            </a>
+          </div>
+          <div class="urgence">
+            <strong>En cas d'urgence</strong> — ce site ne convient pas aux situations de crise.
+            Contactez le <strong>3114</strong> (numéro national de prévention du suicide, gratuit, 24 h/24)
+            ou les services d'urgence.
+          </div>
+        </div>
+        <figure class="art-frame" style="margin:0">
+          <img src="reference-assets/contact-village.jpg" alt="Peinture de Arnaud Debus" width="700" height="707">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTIONS LÉGALES -->
+  <section id="mentions">
+    <div class="container">
+      <div class="legal">
+        <h2>Mentions légales</h2>
+        <dl>
+          <dt>Éditeur</dt><dd>Arnaud Debus — Entrepreneur individuel (EI)</dd>
+          <dt>Profession</dt><dd>Psychologue — RPPS 10008744715 — conventionné « Mon soutien psy »</dd>
+          <dt>Adresse</dt><dd>35 Route de Corneilhan, 34500 Béziers</dd>
+          <dt>SIRET</dt><dd>519 381 669 00042 — 519 381 669 R.C.S. Béziers</dd>
+          <dt>Contact</dt><dd>arnauddebus@sfr.fr · 07 77 75 93 10</dd>
+          <dt>Directeur de la publication</dt><dd>Arnaud Debus</dd>
+          <dt>Hébergeur</dt><dd>GitHub, Inc. — 88 Colin P. Kelly Jr St, San Francisco, CA 94107, USA</dd>
+          <dt>Propriété intellectuelle</dt><dd>Textes et peintures © Arnaud Debus — reproduction interdite sans autorisation.</dd>
+          <dt>Données personnelles</dt><dd>Site statique&nbsp;: aucun cookie, aucun traceur, aucune collecte. La carte OpenStreetMap n'est chargée qu'à votre demande.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">Arnaud Debus</div>
+        <div>Psychologue à domicile · Hérault (34)</div>
+      </div>
+      <nav aria-label="Pied de page">
+        <a href="#mentions">Mentions légales</a> &nbsp;·&nbsp;
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <p style="margin:22px 0 0;font-size:.85rem;opacity:.85">© <span id="year"></span> Arnaud Debus. Peintures © Arnaud Debus.</p>
+  </div>
+</footer>
+
+<script>
+  // Année
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Thème
+  var root = document.documentElement;
+  var btn = document.getElementById('theme');
+  function syncTheme() {
+    var dark = root.dataset.theme === 'dark';
+    document.getElementById('theme-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('theme-label').textContent = dark ? 'Clair' : 'Sombre';
+    btn.setAttribute('aria-pressed', String(dark));
+  }
+  syncTheme();
+  btn.addEventListener('click', function () {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    syncTheme();
+  });
+
+  // Menu mobile
+  var burger = document.querySelector('.burger');
+  var menu = document.getElementById('menu');
+  burger.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  menu.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+
+  // Thématiques : voir plus / voir moins
+  (function () {
+    var toggle = document.getElementById('chips-toggle');
+    var extras = document.querySelectorAll('#chips .extra');
+    var n = extras.length;
+    toggle.addEventListener('click', function () {
+      var expanded = toggle.getAttribute('aria-expanded') === 'true';
+      extras.forEach(function (el) { el.hidden = expanded; });
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      toggle.textContent = expanded ? 'Voir plus (+' + n + ')' : 'Voir moins';
+    });
+  })();
+
+  // Carte OSM : chargée seulement au clic (pattern RGPD)
+  document.getElementById('load-map').addEventListener('click', function () {
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(css);
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    s.onload = initMap;
+    s.onerror = function () {
+      document.getElementById('map-ph').innerHTML =
+        '<strong>Carte indisponible hors ligne</strong><small>La démo Leaflet a besoin d\'une connexion. Zones : autour de Béziers, Clermont-l\'Hérault et Pézenas.</small>';
+    };
+    document.body.appendChild(s);
+  });
+
+  function initMap() {
+    document.getElementById('map-ph').style.display = 'none';
+    var map = document.getElementById('map');
+    var attr = document.getElementById('attr');
+    map.hidden = false; attr.hidden = false;
+
+    var m = L.map('map', { scrollWheelZoom: false }).setView([43.48, 3.36], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18, attribution: '© OpenStreetMap contributors'
+    }).addTo(m);
+
+    var zones = [
+      ['Béziers', 43.3442, 3.2158],
+      ["Clermont-l'Hérault", 43.6277, 3.4336],
+      ['Pézenas', 43.4608, 3.4230]
+    ];
+    zones.forEach(function (z) {
+      L.circle([z[1], z[2]], {
+        radius: 12000, color: '#6D28D9', weight: 2,
+        fillColor: '#8B5CF6', fillOpacity: 0.18
+      }).addTo(m).bindPopup('Zone de déplacement — autour de ' + z[0]);
+    });
+  }
+</script>
+</body>
+</html>

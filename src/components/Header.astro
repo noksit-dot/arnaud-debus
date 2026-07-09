@@ -1,0 +1,87 @@
+---
+import { site } from "../data/site";
+import { link } from "../lib/url";
+
+// Liens d'ancre absolus → fonctionnent aussi depuis /mentions-legales
+const links = [
+  { href: link("#accueil"), label: "Accueil" },
+  { href: link("#a-propos"), label: "À propos" },
+  { href: link("#prestations"), label: "Prestations" },
+  { href: link("#zones"), label: "Zones" },
+  { href: link("#contact"), label: "Contact" },
+];
+---
+
+<header class="site">
+  <div class="container nav">
+    <a class="brand" href={link("#accueil")}>
+      {site.name}<span>{site.tagline}</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <button
+        class="burger"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-label="Ouvrir le menu">☰</button
+      >
+      <ul class="nav-links" id="menu">
+        {links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <button
+      class="theme-toggle"
+      id="theme"
+      aria-label="Basculer le thème clair/sombre">
+      <span id="theme-icon" aria-hidden="true">🌙</span
+      ><span id="theme-label">Sombre</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Bascule de thème
+  const root = document.documentElement;
+  const btn = document.getElementById("theme")!;
+  function syncTheme() {
+    const dark = root.dataset.theme === "dark";
+    document.getElementById("theme-icon")!.textContent = dark ? "☀️" : "🌙";
+    document.getElementById("theme-label")!.textContent = dark
+      ? "Clair"
+      : "Sombre";
+    btn.setAttribute("aria-pressed", String(dark));
+  }
+  syncTheme();
+  btn.addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    try {
+      localStorage.setItem("theme", root.dataset.theme);
+    } catch (e) {}
+    syncTheme();
+  });
+
+  // Menu mobile (burger)
+  const burger = document.querySelector<HTMLButtonElement>(".burger")!;
+  const menu = document.getElementById("menu")!;
+  burger.addEventListener("click", () => {
+    const open = menu.classList.toggle("open");
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  menu.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).tagName === "A") {
+      menu.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+    }
+  });
+  // Fermeture au clavier (Échap)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu.classList.contains("open")) {
+      menu.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.focus();
+    }
+  });
+</script>

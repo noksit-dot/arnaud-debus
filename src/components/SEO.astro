@@ -1,0 +1,62 @@
+---
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+
+// URL canonique absolue (basée sur `site` dans astro.config.mjs)
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Données structurées schema.org : le psychologue + son activité locale.
+// ⚠️ Pas d'adresse précise (anti-doxxing) — seulement les zones desservies.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: site.name,
+      jobTitle: "Psychologue",
+      telephone: site.phoneIntl,
+      email: site.email,
+      url: canonical,
+      areaServed: site.zones.mapCircles.map((z) => z.name),
+    },
+    {
+      "@type": "ProfessionalService",
+      name: `${site.name} — Psychologue`,
+      description: site.seo.description,
+      telephone: site.phoneIntl,
+      email: site.email,
+      url: canonical,
+      priceRange: "50 €",
+      areaServed: [
+        ...site.zones.mapCircles.map((z) => ({ "@type": "City", name: z.name })),
+        { "@type": "AdministrativeArea", name: "Hérault" },
+      ],
+    },
+  ],
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={site.seo.keywords} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
